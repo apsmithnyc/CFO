@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Business Case for Enterprise Pharmacy Intelligence — Latent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-dark:#140a26;
+    --bg-light:#f8f6fb;
+    --bg-card:#ffffff;
+    --accent:#7c4dfc;
+    --accent-line:rgba(124,77,252,0.35);
+    --accent-soft:#efe9fd;
+    --text-dark:#1c1730;
+    --text-body:#3d3752;
+    --text-muted:#8a83a3;
+    --text-on-dark:#f3f0fb;
+    --line-light:rgba(28,23,48,0.10);
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--bg-light);
+    color:var(--text-body);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+  }
+
+  /* ============ COVER ============ */
+  .cover{
+    position:relative;
+    background:radial-gradient(120% 90% at 82% 8%, #2a1650 0%, var(--bg-dark) 55%, var(--bg-dark) 100%);
+    color:var(--text-on-dark);
+    padding:48px 56px 0;
+    overflow:hidden;
+    min-height:660px;
+    display:flex;
+    flex-direction:column;
+  }
+  .logo{ display:flex; align-items:center; gap:10px; }
+  .logo-mark{ width:22px; height:22px; display:block; }
+  .logo-word{ font-size:17px; font-weight:700; letter-spacing:0.01em; color:var(--text-on-dark); }
+  .cover-body{ position:relative; padding-top:64px; }
+  .mono{ font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:0.14em; font-size:11px; font-weight:500; }
+  .eyebrow-accent{ color:var(--accent); display:block; }
+  .cover-date{ color:var(--text-on-dark-muted); display:block; margin-bottom:18px; }
+  .cover-rule{ width:56px; height:3px; background:var(--accent); margin:0 0 26px; border-radius:2px; }
+  .cover-title{ font-size:50px; font-weight:800; line-height:1.1; letter-spacing:-0.02em; margin:0 0 22px; color:var(--text-on-dark); }
+  .cover-statement{ font-size:19px; font-weight:700; color:var(--text-on-dark); max-width:640px; margin:0 0 18px; line-height:1.4; }
+  .cover-lede{ font-size:18px; font-weight:400; color:var(--text-on-dark-muted); max-width:640px; margin:0; line-height:1.55; text-wrap:pretty; }
+
+  .featured-in{ position:relative; margin-top:auto; padding:40px 0 36px; }
+  .featured-in-label{ font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:500; text-transform:uppercase; letter-spacing:0.14em; color:var(--text-on-dark-muted); display:block; margin-bottom:22px; }
+  .featured-logos{ display:flex; flex-wrap:wrap; align-items:center; gap:36px 44px; }
+  .featured-logos-img{ max-width:100%; height:auto; max-height:34px; display:block; filter:brightness(0) invert(1); }
+
+  .globe-wrap{ position:absolute; top:-40px; right:-60px; width:420px; height:420px; opacity:0.9; transform:scale(3); transform-origin:top right; }
+  .globe-canvas{ display:block; width:100%; height:100%; }
+  .globe-static{ display:none; width:100%; height:100%; }
+  @media (prefers-reduced-motion:reduce){ .globe-canvas{ display:none; } .globe-static{ display:block; } }
+
+  /* ============ CONTENT SECTIONS ============ */
+  main{ max-width:760px; margin:0 auto; padding:0 32px; }
+  .block{ padding:56px 0; border-bottom:1px solid var(--line-light); }
+  .block:last-of-type{ border-bottom:none; }
+  .section-title{ font-size:32px; font-weight:800; letter-spacing:-0.015em; color:var(--text-dark); line-height:1.2; margin:0 0 24px; }
+  .section-num{ font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:500; color:var(--accent); display:block; margin-bottom:10px; }
+  .body-text{ font-size:17px; color:var(--text-body); margin:0 0 8px; max-width:640px; }
+
+  /* ============ BULLETED STAT LIST ============ */
+  .stat-list-module{
+    margin:24px 0;
+    background:var(--bg-card);
+    border:1px solid var(--line-light);
+    border-radius:12px;
+    padding:22px 26px;
+  }
+  .stat-list-module ul{ margin:0; padding-left:20px; color:var(--text-dark); }
+  .stat-list-module li{ font-size:16px; color:var(--text-dark); margin:0 0 8px; }
+  .stat-list-module li:last-child{ margin-bottom:0; }
+  .plain-list{ margin:16px 0; padding-left:34px; }
+  .plain-list li{ font-size:17px; color:var(--text-body); margin:0 0 8px; }
+  .plain-list li:last-child{ margin-bottom:0; }
+
+  /* ============ BIG-NUMBER CALLOUT MODULE ============ */
+  .callout-module{ margin:28px 0; background:var(--bg-card); border:1px solid var(--line-light); border-radius:14px; padding:28px 26px 24px; }
+  .callout-headline{ font-size:19px; font-weight:700; color:var(--text-dark); line-height:1.35; margin:0 0 22px; max-width:520px; }
+  .callout-stats{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:20px; }
+  .callout-num{ font-size:36px; font-weight:800; color:var(--accent); letter-spacing:-0.01em; line-height:1.1; display:block; }
+  .callout-label{ font-size:15px; font-weight:700; color:var(--text-dark); margin-top:8px; display:block; }
+  .callout-source{ font-size:11.5px; color:var(--text-muted); margin-top:6px; display:block; }
+
+  /* ============ 3-UP COMPACT GRID (case studies + stat trio) ============ */
+  .trio-grid{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px; margin:28px 0; }
+  .duo-grid{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px; }
+  .cs-stat-duo{ display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px; padding:18px 0; border-top:1px dashed var(--line-light); border-bottom:1px dashed var(--line-light); margin-bottom:18px; }
+  .cs-num{ font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-0.005em; line-height:1.15; display:block; }
+  .cs-label{ font-size:14px; font-weight:700; color:var(--text-dark); margin-top:6px; display:block; line-height:1.4; }
+  .trio-card{ background:var(--bg-card); border:1px solid var(--line-light); border-radius:12px; padding:18px 16px 16px; display:flex; flex-direction:column; opacity:0; transform:translateY(10px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .trio-card.is-visible{ opacity:1; transform:none; }
+  .trio-logo{ font-size:12.5px; font-weight:700; color:var(--text-dark); letter-spacing:-0.01em; margin-bottom:12px; line-height:1.3; }
+  .trio-num{ font-size:28px; font-weight:800; color:var(--accent); letter-spacing:-0.005em; line-height:1.15; }
+  .trio-label{ font-size:13.5px; font-weight:700; color:var(--text-dark); margin-top:8px; line-height:1.4; flex:1; }
+  .trio-link{ margin-top:14px; font-size:12.5px; font-weight:600; color:var(--accent); text-decoration:none; display:inline-flex; align-items:center; gap:4px; }
+  .trio-link:hover{ text-decoration:underline; }
+
+  /* ============ PULL QUOTE ============ */
+  .pull-quote{ margin:36px 0; padding-left:26px; border-left:4px solid var(--accent); }
+  .pull-quote p{ font-size:27px; font-weight:500; font-style:italic; color:var(--text-dark); line-height:1.42; letter-spacing:-0.01em; margin:0 0 20px; }
+  .pull-quote-attribution{ display:flex; align-items:center; gap:14px; }
+  .pull-quote cite{ display:flex; flex-direction:column; font-style:normal; line-height:1.4; }
+  .pq-name{ font-size:15px; font-weight:600; color:var(--text-dark); }
+  .pq-title{ font-size:13px; color:var(--text-muted); }
+  .cs-avatar-placeholder{ width:42px; height:42px; border-radius:50%; background:#efe9fd; color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; flex-shrink:0; border:1px solid var(--accent-line); }
+
+  /* ============ CASE STUDY MODULE ============ */
+  .case-study{
+    margin:28px 0;
+    background:var(--bg-card);
+    border:1px solid var(--line-light);
+    border-radius:14px;
+    padding:26px 28px 22px;
+    opacity:0;
+    transform:translateY(12px);
+    transition:opacity 0.6s ease, transform 0.6s ease;
+  }
+  .case-study.is-visible{ opacity:1; transform:none; }
+  .cs-logo-row{ margin-bottom:18px; }
+  .cs-logo-text{ font-family:'Inter',sans-serif; font-size:16px; font-weight:700; letter-spacing:-0.01em; color:var(--text-dark); }
+  .cs-stat-single{ padding:16px 0; border-top:1px dashed var(--line-light); border-bottom:1px dashed var(--line-light); margin-bottom:16px; }
+  .cs-stat-single .cs-stat-num{ font-size:28px; font-weight:800; letter-spacing:-0.005em; color:var(--accent); display:block; }
+  .cs-stat-single .cs-stat-label{ font-size:14px; font-weight:700; color:var(--text-dark); margin-top:6px; display:block; }
+  .cs-link-row{ display:flex; justify-content:flex-end; }
+  .cs-link{ display:inline-flex; align-items:center; gap:6px; color:var(--accent); font-weight:600; font-size:14px; text-decoration:none; }
+  .cs-link:hover{ text-decoration:underline; }
+  .cs-link:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  /* ============ ROI CALCULATOR ============ */
+  .roi-widget{ margin:28px 0; background:var(--bg-card); border:1px solid var(--line-light); border-radius:14px; padding:30px 32px 28px; }
+  .roi-widget-title{ font-size:17px; font-weight:700; color:var(--text-dark); margin:10px 0 6px; }
+  .roi-widget-sub{ font-size:14px; color:var(--text-muted); margin:0 0 22px; max-width:520px; }
+  .roi-row{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:20px; align-items:start; margin-top:24px; padding-top:22px; border-top:1px dashed var(--line-light); }
+  .roi-field label{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted); margin-bottom:8px; }
+  .roi-field input{ font-family:'Inter',sans-serif; font-size:22px; font-weight:700; color:var(--text-dark); width:100%; max-width:160px; padding:10px 14px; border:1.5px solid var(--accent-line); border-radius:10px; background:var(--accent-soft,#efe9fd); }
+  .roi-field input:focus{ outline:2px solid var(--accent); outline-offset:1px; }
+  .roi-output-num{ font-size:26px; font-weight:800; color:var(--accent); display:block; line-height:1.15; }
+  .roi-output-label{ font-size:13px; color:var(--text-body); margin-top:4px; display:block; }
+
+  /* ============ CLOSING FOOTER ============ */
+  .closing-footer{ background:radial-gradient(120% 90% at 82% 8%, #2a1650 0%, var(--bg-dark) 55%, var(--bg-dark) 100%); padding:72px 32px; }
+  .closing-inner{ max-width:640px; margin:0 auto; }
+  .closing-title{ font-size:32px; font-weight:800; letter-spacing:-0.015em; color:var(--text-on-dark); line-height:1.25; margin:0 0 24px; }
+  .closing-text{ font-size:17px; color:var(--text-on-dark); line-height:1.65; margin:0 0 20px; }
+  .closing-cta{ display:inline-flex; align-items:center; gap:8px; margin-top:12px; font-size:17px; font-weight:700; color:var(--text-on-dark); text-decoration:none; border-bottom:2px solid var(--accent); padding-bottom:4px; transition:opacity 0.15s ease; }
+  .closing-cta:hover{ opacity:0.8; }
+  .closing-cta:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:640px){
+    .cover{ padding:32px 24px 72px; min-height:auto; }
+    .cover-title{ font-size:34px; }
+    .cover-body{ padding-top:180px; }
+    .globe-wrap{ transform:scale(0.62); top:-70px; right:-90px; }
+    .featured-in{ padding:28px 0 28px; }
+    .featured-logos{ gap:22px 28px; }
+    .featured-logos-img{ max-height:26px; }
+    main{ padding:0 22px; }
+    .block{ padding:44px 0; }
+    .section-title{ font-size:26px; }
+    .pull-quote{ padding-left:18px; margin:26px 0; }
+    .pull-quote p{ font-size:21px; }
+    .case-study{ padding:20px 18px 18px; }
+    .callout-stats{ grid-template-columns:1fr; gap:18px; }
+    .duo-grid, .cs-stat-duo{ grid-template-columns:1fr; gap:18px; }
+    .trio-grid{ grid-template-columns:1fr; }
+    .roi-row{ grid-template-columns:1fr; }
+  }
+  @media (prefers-reduced-motion:reduce){ .case-study{ transition:none; opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+
+  <!-- ============ COVER ============ -->
+  <section class="cover">
+    <div class="logo">
+      <svg class="logo-mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 1L21.5 6.5V17.5L12 23L2.5 17.5V6.5L12 1Z" stroke="#7c4dfc" stroke-width="1.6"/>
+        <path d="M12 8L16 10.3V14.7L12 17L8 14.7V10.3L12 8Z" fill="#7c4dfc"/>
+      </svg>
+      <span class="logo-word">latent</span>
+    </div>
+
+    <div class="globe-wrap">
+      <canvas class="globe-canvas" id="globeCanvas" width="420" height="420" aria-hidden="true"></canvas>
+      <svg class="globe globe-static" width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="210" cy="210" r="150" stroke="#7c4dfc" stroke-opacity="0.35" stroke-width="1"/>
+        <ellipse cx="210" cy="210" rx="150" ry="55" stroke="#7c4dfc" stroke-opacity="0.28" stroke-width="1"/>
+        <ellipse cx="210" cy="210" rx="150" ry="55" stroke="#7c4dfc" stroke-opacity="0.28" stroke-width="1" transform="rotate(60 210 210)"/>
+        <ellipse cx="210" cy="210" rx="150" ry="55" stroke="#7c4dfc" stroke-opacity="0.28" stroke-width="1" transform="rotate(120 210 210)"/>
+        <ellipse cx="210" cy="210" rx="150" ry="95" stroke="#7c4dfc" stroke-opacity="0.2" stroke-width="1"/>
+        <g fill="#a985ff">
+          <circle cx="210" cy="60" r="2.5"/><circle cx="290" cy="90" r="2"/><circle cx="340" cy="150" r="2.5"/>
+          <circle cx="358" cy="210" r="2"/><circle cx="340" cy="270" r="2.5"/><circle cx="290" cy="330" r="2"/>
+          <circle cx="210" cy="360" r="2.5"/><circle cx="130" cy="330" r="2"/><circle cx="80" cy="270" r="2.5"/>
+          <circle cx="62" cy="210" r="2"/><circle cx="80" cy="150" r="2.5"/><circle cx="130" cy="90" r="2"/>
+          <circle cx="210" cy="210" r="2.5"/><circle cx="150" cy="180" r="2"/><circle cx="270" cy="180" r="2"/>
+          <circle cx="150" cy="240" r="2"/><circle cx="270" cy="240" r="2"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="cover-body">
+      <span class="mono cover-date">AUGUST 2026</span>
+      <div class="cover-rule"></div>
+      <h1 class="cover-title">The Business Case for<br>Enterprise Pharmacy Intelligence</h1>
+      <p class="cover-statement">Pharmacy is simultaneously the largest uncontrolled cost and the fastest-growing margin opportunity.</p>
+      <p class="cover-lede">Today&rsquo;s health systems are leaking millions of dollars every year because of inefficiencies, lack of patient adherence, and low capture volume in pharmacy. Pharmacy processes and operations are not centralized, pharmacists are not trained to track the margins, and finance teams still don&rsquo;t have real-time visibility into pharmacy performance.</p>
+    </div>
+
+    <div class="featured-in">
+      <span class="featured-in-label">Featured in this playbook</span>
+      <div class="featured-logos">
+        <img class="featured-logos-img" src="https://cdn.prod.website-files.com/68114bc2c53c94882188a322/6a4efd5ca088c384c99ce10c_6a4efd49623376fab7047cb9_logo-lockup-cost-center-row.png" alt="Ochsner Health, St. Luke's, MetroHealth, Yale New Haven Health logos" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTENT ============ -->
+  <main>
+
+    <section class="block">
+      <p class="body-text">Latent is the Enterprise Pharmacy Intelligence platform, powered by a clinical agentic engine, that helps health systems grow their pharmacy operations, serve more patients, and capture more value. Latent centralizes operations across every surface of pharmacy, across the entire patient journey, from diagnosis to health, intelligently.</p>
+      <p class="body-text">With seamless integration across your Pharmacy ecosystem, Latent&rsquo;s Enterprise Pharmacy Intelligence platform drives transformation across five key areas:</p>
+
+      <ul class="plain-list">
+        <li>Increases capacity with current FTEs</li>
+        <li>Powers a growth engine that diversifies revenue</li>
+        <li>Strengthens data-driven negotiation with payers</li>
+        <li>Delivers world-class patient experience</li>
+        <li>Proves AI ROI in the first quarter of go-live</li>
+      </ul>
+
+      <div class="callout-module">
+        <p class="callout-headline">Money invested in prior authorizations<br>is wasted when patients abandon treatment</p>
+        <div class="callout-stats">
+          <div>
+            <span class="callout-num">$35 billion</span>
+            <span class="callout-label">Spent annually on PA administration</span>
+            <span class="callout-source">Health Affairs Scholar</span>
+          </div>
+          <div>
+            <span class="callout-num">82%</span>
+            <span class="callout-label">of patients abandon treatment</span>
+            <span class="callout-source">AMA survey of physicians</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="body-text" style="margin-top:22px;">We are now seeing a new business case for Latent&rsquo;s Enterprise Pharmacy Intelligence that is transforming pharmacy from a blind cost center to a significant revenue generator by serving more patients, growing the pharmacy operation, and capturing additional value without adding headcount.</p>
+
+      <blockquote class="pull-quote">
+        <p>&ldquo;We're on track to save about half a million dollars in labor expenses just in the first year. And an additional two million dollars in EBITDA.&rdquo;</p>
+        <div class="pull-quote-attribution">
+          <cite>
+            <span class="pq-name">Josh Weber</span>
+            <span class="pq-title">Senior Director, Ambulatory, Retail, &amp; Specialty Pharmacy Services, St. Luke&rsquo;s Health System, Latent Customer</span>
+          </cite>
+        </div>
+      </blockquote>
+    </section>
+
+    <section class="block">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Increases capacity with current FTEs</h2>
+      <p class="body-text">Prescription volume continues to climb while reimbursement and staffing budgets stay flat. Plus, the pharmacists and technicians filling out forms are not working at the top of their license. With Enterprise Pharmacy Intelligence, pharmacy can automate the transactional work of prior authorizations, intake triage, denial management, and more, to give that time back to the pharmacy. And these benefits extend well past efficiency. With increased capacity, health systems see improved throughput, increased dispense rates that scale alongside patient volume.</p>
+
+      <div class="callout-module">
+        <div class="duo-grid">
+          <div>
+            <span class="callout-num">13&ndash;14%</span>
+            <span class="callout-label">Growth of drug expenses YoY 2025</span>
+          </div>
+          <div>
+            <span class="callout-num">$568B</span>
+            <span class="callout-label">Projected specialty drug spend in 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="body-text">Today, 50+ leading health systems are leveraging Latent&rsquo;s Enterprise Pharmacy Intelligence with measurable impact: increased productivity, improved approvals and appeals, and a world-class patient experience that delivers ROI from diagnosis to therapy as patients remain in your system.</p>
+
+      <blockquote class="pull-quote">
+        <p>&ldquo;In our specialty pharmacy, the productivity of our FTs doing prior authorization went up 39% and our denials team said their work decreased by 80%.&rdquo;</p>
+        <div class="pull-quote-attribution">
+          <cite>
+            <span class="pq-name">Debbie Simonson</span>
+            <span class="pq-title">Vice President, Chief Pharmacy Officer, Ochsner, Latent Customer</span>
+          </cite>
+        </div>
+      </blockquote>
+
+      <div class="trio-grid">
+        <div class="trio-card">
+          <span class="trio-logo">MetroHealth</span>
+          <span class="trio-num">+45.1%</span>
+          <span class="trio-label">PA submission capacity, zero added headcount</span>
+          <a class="trio-link" href="https://latenthealth.com/case-study/metro-case-study-2025">Read case study <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="trio-card">
+          <span class="trio-logo">St. Luke&rsquo;s Health System</span>
+          <span class="trio-num">+1,200/mo</span>
+          <span class="trio-label">added PA capacity per month</span>
+          <a class="trio-link" href="https://latenthealth.com/case-study/latent-health-st-lukes-health-system">Read case study <span aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="trio-card">
+          <span class="trio-logo">Yale New Haven Health</span>
+          <span class="trio-num">+109%</span>
+          <span class="trio-label">PA throughput per team member</span>
+          <a class="trio-link" href="https://latenthealth.com/case-study/ynhh-cs-2025-1">Read case study <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+
+      <div class="roi-widget">
+        <span class="mono eyebrow-accent">PRIOR AUTH ROI CALCULATOR</span>
+        <p class="roi-widget-title">See how much Latent&rsquo;s Enterprise Pharmacy Intelligence<br>would boost your PA capacity.</p>
+        <p class="roi-widget-sub">Enter your pharmacy&rsquo;s current monthly prior-authorization volume. The projection here applies MetroHealth&rsquo;s documented +45.1% capacity gain at zero added headcount against your own numbers.</p>
+
+        <div class="roi-row">
+          <div class="roi-field">
+            <label for="roiPaVolume">PAs processed per month</label>
+            <input type="number" id="roiPaVolume" value="500" min="0" step="10">
+          </div>
+          <div class="roi-result">
+            <span class="roi-output-num" id="roiAdditional">+226</span>
+            <span class="roi-output-label">Additional PAs/month at current staffing</span>
+          </div>
+          <div class="roi-result">
+            <span class="roi-output-num" id="roiTotal">726</span>
+            <span class="roi-output-label">Projected total monthly capacity</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Powers a growth engine that diversifies revenue</h2>
+
+      <blockquote class="pull-quote">
+        <p>&ldquo;Now only 10% of my spend's inpatient, because I've built an enterprise that takes care of the patients when they walk out the door for treatment.&rdquo;</p>
+        <div class="pull-quote-attribution">
+          <cite>
+            <span class="pq-name">Debbie Simonson</span>
+            <span class="pq-title">Vice President, Chief Pharmacy Officer, Ochsner, Latent Customer</span>
+          </cite>
+        </div>
+      </blockquote>
+
+      <p class="body-text">Prior Authorization automation expands that top of the funnel, but that funnel narrows immediately if the organization cannot capture the patient when that PA clears. Payer lock out, patient choice, and LDD are all bottlenecks that hinder dispenses. Every PA that stalls, and every appeal isn&rsquo;t tracked, is a dispense that happens somewhere else. Denied and delayed authorizations are revenue a system already earned and hasn&rsquo;t collected. Pharmacy is doing all the PA work but capturing only a fraction, leaking millions in revenue to outside pharmacies.</p>
+
+      <div class="trio-grid">
+        <div class="trio-card">
+          <span class="trio-num">84%</span>
+          <span class="trio-label">administrative and clinical leaders cite financial pressures as their greatest threat</span>
+        </div>
+        <div class="trio-card">
+          <span class="trio-num">7.5%</span>
+          <span class="trio-label">YoY increase in hospital expenses and labor costs</span>
+        </div>
+        <div class="trio-card">
+          <span class="trio-num">75%</span>
+          <span class="trio-label">CFOs report higher cost pressure than previous years</span>
+        </div>
+      </div>
+
+      <p class="body-text">Enterprise Pharmacy Intelligence flips that equation with an infrastructure to automate PA and also capture more volume across specialty, retail, infusion, and home delivery. This not only improves the patient experience but also diversifies revenue.</p>
+
+      <div class="case-study">
+        <div class="cs-logo-row"><span class="cs-logo-text">St. Luke&rsquo;s Health System</span></div>
+        <div class="cs-stat-duo">
+          <div><span class="cs-num">~$300K</span><span class="cs-label">saved in annualized labor cost</span></div>
+          <div><span class="cs-num">Multi-million</span><span class="cs-label">net-new revenue by routing more specialty fills back to its own pharmacies</span></div>
+        </div>
+        <div class="cs-link-row"><a class="cs-link" href="https://latenthealth.com/press/proving-ai-roi">Read the case study <span aria-hidden="true">&rarr;</span></a></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Strengthens data-driven negotiation</h2>
+      <p class="body-text">With a single platform of intelligence, one data set across the entire patient journey, CFOs can walk into payer and manufacturer negotiations with clear, defensible evidence. Enterprise Pharmacy Intelligence showcases the entire patient journey, growth metrics, patient experience, and financial performance, on a single pane of glass.</p>
+
+      <blockquote class="pull-quote">
+        <p>&ldquo;We have our growth metrics, our patient experience metrics, our refill retention metrics, our auto refill metrics, and everything's kind of connected... we actually report those same metrics straight into our executive team.&rdquo;</p>
+        <div class="pull-quote-attribution">
+          <cite>
+            <span class="pq-name">Josh Weber</span>
+            <span class="pq-title">Senior Director, Ambulatory, Retail, &amp; Specialty Pharmacy Services, St. Luke&rsquo;s Health System, Latent Customer</span>
+          </cite>
+        </div>
+      </blockquote>
+
+      <p class="body-text">Fifty-one percent of hospital CFOs now require technology investments to return over 110% within 18 months, nearly half the runway they had three years ago. Many AI investments are not meeting that bar. Enterprise Pharmacy Intelligence does, delivering measurable financial return inside the first quarter of go-live.</p>
+
+      <p class="body-text">With unified, real-time data on increased capture and boosted margin, health systems can take on an offensive positioning and best shape the organization for the future. Most systems get one real opportunity every few years to set the SLAs and rates that hold until the next cycle. What happens in that room depends on whether leadership can prove their health system&rsquo;s performance.</p>
+
+      <div class="case-study">
+        <div class="cs-logo-row"><span class="cs-logo-text">Ochsner Health</span></div>
+        <div class="cs-stat-duo">
+          <div><span class="cs-num">76%</span><span class="cs-label">faster appeal drafting time</span></div>
+          <div><span class="cs-num">35</span><span class="cs-label">hours recovered across 91 appeals</span></div>
+        </div>
+        <div class="cs-link-row"><a class="cs-link" href="https://latenthealth.com/case-study/ochsner-latent-appeal">Read the case study <span aria-hidden="true">&rarr;</span></a></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Delivers world-class patient experience</h2>
+
+      <blockquote class="pull-quote">
+        <p>&ldquo;At Ochsner Health, we choose like-minded partners to help us deliver exceptional care and drive innovation. Together, we are shaping a future of enhanced patient outcomes and streamlined workflows for our providers. From day one, Latent has exemplified what it means to be a trusted partner, aligning with our long-term vision for success.&rdquo;</p>
+        <div class="pull-quote-attribution">
+          <cite>
+            <span class="pq-name">Amy Trainor, RN</span>
+            <span class="pq-title">Chief Information Officer, Ochsner Health, Latent Customer</span>
+          </cite>
+        </div>
+      </blockquote>
+
+      <p class="body-text">Faster access to therapy is the difference between a patient starting treatment and a patient abandoning it.</p>
+      <p class="body-text">The speed of access to therapy often determines if the patient even starts treatment. If the wait is too long, patients abandon therapy altogether. Enterprise Pharmacy Intelligence bridges that gap between prescription and treatment by automating prior authorization, intake, and benefits verification instead of routing paperwork through a queue.</p>
+      <p class="body-text">Speed delivers retention. Patients who start therapy fast stay in the health system&rsquo;s pharmacy and the system keeps both the outcome and the revenue that comes with it. The patient feels supported and taken care of.</p>
+
+      <blockquote class="pull-quote">
+        <p>&ldquo;Across our enterprise, physicians, nurses, pharmacists, are really trying to accelerate care overall. Part of that includes medication and medication access, but we believe that this is a mission-critical part of care that drives patient experience, patient resilience, prevention, and curative therapies&hellip;&rdquo;</p>
+        <div class="pull-quote-attribution">
+          <cite>
+            <span class="pq-name">Marjorie Lazarre</span>
+            <span class="pq-title">Yale New Haven Health System, Latent Customer</span>
+          </cite>
+        </div>
+      </blockquote>
+
+      <div class="case-study">
+        <div class="cs-logo-row"><span class="cs-logo-text">MetroHealth</span></div>
+        <div class="cs-stat-single"><span class="cs-stat-num">19.6% increase</span> <span class="cs-stat-label">in prescription volume, directly improving patient access to essential medications</span></div>
+        <div class="cs-link-row"><a class="cs-link" href="https://latenthealth.com/case-study/metro-case-study-2025">Read the case study <span aria-hidden="true">&rarr;</span></a></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Proves AI ROI in first quarter of go-live</h2>
+
+      <blockquote class="pull-quote">
+        <p>&ldquo;My staff is doing things beyond what they expected. And it's even more of a satisfaction for the employees. We're using their brains, we're using their talents on a different level, which gives them a lot of satisfaction from the patient experience and outcomes.&rdquo;</p>
+        <div class="pull-quote-attribution">
+          <cite>
+            <span class="pq-name">Ryan Mezinger</span>
+            <span class="pq-title">MetroHealth, Latent Customer</span>
+          </cite>
+        </div>
+      </blockquote>
+
+      <p class="body-text">Prior authorization is where Latent started, because that&rsquo;s where the pain was loudest. The same engine now reads 340B eligibility, drafts appeals, routes the benefit, and prepares pharmacists for the patient call. Patients get to therapy faster, and the team already in place gets more done without adding headcount to do it.</p>
+
+      <div class="case-study">
+        <div class="cs-logo-row"><span class="cs-logo-text">MetroHealth</span></div>
+        <div class="cs-stat-duo">
+          <div><span class="cs-num">$50M</span><span class="cs-label">in copay assistance secured for its patients</span></div>
+          <div><span class="cs-num">85%+</span><span class="cs-label">specialty fill capture rate lifted above</span></div>
+        </div>
+        <div class="cs-link-row"><a class="cs-link" href="https://latenthealth.com/press/proving-ai-roi">Read the case study <span aria-hidden="true">&rarr;</span></a></div>
+      </div>
+
+      <blockquote class="pull-quote">
+        <p>&ldquo;The ROI is compelling, but the bigger point is that it helps us deliver mission-driven care in a financially sustainable way.&rdquo;</p>
+        <div class="pull-quote-attribution">
+          <cite>
+            <span class="pq-name">Kate Fowler</span>
+            <span class="pq-title">VP, Chief Financial Officer, St. Luke&rsquo;s Health System, Latent Customer</span>
+          </cite>
+        </div>
+      </blockquote>
+
+      <p class="body-text" style="margin-top:28px;">Bring the cost curve down and the capturable margin up, with the team already in place, on a timeline measured in months, not years, with measurable financial returns inside the first quarter of go-live. Enterprise Pharmacy Intelligence is a fast, low-risk platform solution that builds AI maturity ahead of the market with defensible data, diversified revenue, and clear ROI.</p>
+      <p class="body-text">Enterprise Pharmacy Intelligence powers your pharmacists and clinicians to do their best work, get treatment to the patients who need it, and centralize an operation that is currently leaking millions in revenue every year.</p>
+    </section>
+
+  </main>
+
+  <!-- ============ CLOSING FOOTER ============ -->
+  <footer class="closing-footer">
+    <div class="closing-inner">
+      <h2 class="closing-title">Pharmacy is the engine of modern healthcare.</h2>
+      <p class="closing-text">Pharmacy spent decades being told to shrink. The leaders running it now have been asked to grow. Centralization is how the operating model catches up to the mandate.</p>
+      <p class="closing-text">The destination was never faster prior authorizations. It was a pharmacy that could operate as a business, a clinical partner, and a growth engine at the same time. The leaders in this playbook didn&rsquo;t centralize to save minutes. They centralized to build organizations capable of delivering better care at a larger scale.</p>
+      <a class="closing-cta" href="https://latenthealth.com/centralization-playbook">Read the playbook <span aria-hidden="true">&rarr;</span></a>
+    </div>
+  </footer>
+
+  <!-- ============ SCROLL-REVEAL FOR CASE-STUDY MODULES ============ -->
+  <script>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.case-study, .trio-card').forEach(function(el) { observer.observe(el); });
+    } else {
+      document.querySelectorAll('.case-study, .trio-card').forEach(function(el) { el.classList.add('is-visible'); });
+    }
+  </script>
+
+  <!-- ============ ROI CALCULATOR ============ -->
+  <script>
+    (function() {
+      var CAPACITY_LIFT = 0.451; // MetroHealth documented result: +45.1% PA capacity, zero added headcount
+      var input = document.getElementById('roiPaVolume');
+      var additionalEl = document.getElementById('roiAdditional');
+      var totalEl = document.getElementById('roiTotal');
+
+      function formatNum(n) {
+        return Math.round(n).toLocaleString('en-US');
+      }
+
+      function recalc() {
+        var vol = parseFloat(input.value);
+        if (isNaN(vol) || vol < 0) vol = 0;
+        var additional = vol * CAPACITY_LIFT;
+        additionalEl.textContent = '+' + formatNum(additional);
+        totalEl.textContent = formatNum(vol + additional);
+      }
+
+      if (input) {
+        input.addEventListener('input', recalc);
+        recalc();
+      }
+    })();
+  </script>
+
+  <!-- ============ HERO SPHERE REVEAL ============ -->
+  <script>
+    (function() {
+      var canvas = document.getElementById('globeCanvas');
+      if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      var ctx = canvas.getContext('2d');
+      var W = canvas.width, H = canvas.height;
+      var cx = W / 2, cy = H / 2;
+      var R = 150;
+
+      var N = 130;
+      var pts = [];
+      var golden = Math.PI * (3 - Math.sqrt(5));
+      for (var i = 0; i < N; i++) {
+        var y = 1 - (i / (N - 1)) * 2;
+        var radiusAtY = Math.sqrt(Math.max(0, 1 - y * y));
+        var theta = golden * i;
+        pts.push({
+          x: Math.cos(theta) * radiusAtY,
+          y: y,
+          z: Math.sin(theta) * radiusAtY
+        });
+      }
+
+      var startTime = null;
+      var holdDuration = 550;
+      var formDuration = 1400;
+      var rotationSpeed = (2 * Math.PI) / 28000;
+
+      function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+      function frame(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var elapsed = timestamp - startTime;
+
+        var formT = Math.max(0, Math.min((elapsed - holdDuration) / formDuration, 1));
+        var formEase = easeOutCubic(formT);
+
+        var angle = 0;
+        if (elapsed > holdDuration + formDuration) {
+          angle = (elapsed - holdDuration - formDuration) * rotationSpeed;
+        }
+
+        var cosA = Math.cos(angle), sinA = Math.sin(angle);
+
+        ctx.clearRect(0, 0, W, H);
+
+        var projected = pts.map(function(p) {
+          var z = p.z * formEase;
+          var rx = p.x * cosA - z * sinA;
+          var rz = p.x * sinA + z * cosA;
+          return { sx: cx + rx * R, sy: cy + p.y * R, z: rz };
+        });
+
+        projected.sort(function(a, b) { return a.z - b.z; });
+
+        projected.forEach(function(pt) {
+          var depth = (pt.z + 1) / 2;
+          var radius = 1.1 + depth * 2.1;
+          var alpha = 0.14 + depth * 0.55;
+          ctx.beginPath();
+          ctx.arc(pt.sx, pt.sy, radius, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(169, 133, 255,' + alpha.toFixed(2) + ')';
+          ctx.fill();
+        });
+
+        requestAnimationFrame(frame);
+      }
+
+      requestAnimationFrame(frame);
+    })();
+  </script>
+
+</body>
+</html>
